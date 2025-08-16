@@ -5,6 +5,8 @@ import openfe
 from openfe import SmallMoleculeComponent, SolventComponent, ProteinComponent, ChemicalSystem
 from openff.units import unit
 from openfe.protocols.openmm_rfe import RelativeHybridTopologyProtocol
+from gufe import LigandNetwork
+from gufe.mapping.ligandatommapping import LigandAtomMapping
 
 
 def load_ligands(ligands_path: str) -> list[SmallMoleculeComponent]:
@@ -38,7 +40,7 @@ def create_ligand_network(
     ligand_mols: List[SmallMoleculeComponent],
     atom_mapper: str,
     network_type: str
-) -> Any:
+) -> LigandNetwork:
     """
     Create a ligand network for free energy calculations using specified atom mapping and network type.
     Parameters
@@ -102,10 +104,10 @@ def create_ligand_network(
 
 def create_chemical_system(
     protein_path: str,
-    network: Any,
+    network: LigandNetwork,
     ligand_name: str,
     solvent_params: Dict[str, Any]
-) -> Tuple[ChemicalSystem, ChemicalSystem, Any]:
+) -> Tuple[ChemicalSystem, ChemicalSystem, LigandAtomMapping]:
     """
     Creates two ChemicalSystem objects representing the complex of a protein with two ligand states (A and B),
     along with a solvent environment, for use in free energy perturbation simulations.
@@ -134,6 +136,7 @@ def create_chemical_system(
                                ion_concentration=solvent_params['ion_concentration']*unit.molar)
 
     chosen_edge = [edge for edge in network.edges if edge.componentB.name == ligand_name][0]
+
     stateA_complex = ChemicalSystem({'ligand': chosen_edge.componentA,
                                   'solvent': solvent,
                                   'protein': protein,},

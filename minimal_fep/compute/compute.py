@@ -1,8 +1,14 @@
 import openfe
 from gufe.protocols.protocoldag import execute_DAG
+from gufe import AtomMapper, Protocol
 import pathlib
 
-def compute_rbfe(stateA_complex, stateB_complex, mapping, rbfe_protocol):
+def compute_rbfe(
+    stateA_complex: openfe.ChemicalSystem,
+    stateB_complex: openfe.ChemicalSystem,
+    mapping: AtomMapper,
+    rbfe_protocol: Protocol
+) -> None:
     """
     Computes the relative binding free energy (RBFE) between two states in a complex system.
     This function sets up and executes an RBFE transformation using the provided states, atom mapping,

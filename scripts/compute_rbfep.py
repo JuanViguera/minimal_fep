@@ -7,16 +7,16 @@ def main():
 
     parser.add_argument('--ligands_path', type=str, required=True, help="Path to an sdf file containing ligands.")
     parser.add_argument('--protein_path', type=str, required=True, help="Path to the pdb file containing the protein structure.")
-
+    # ligand parameters
     parser.add_argument('--atom_mapper', type=str, default='lomap', choices=['lomap', 'kartograf'], help="Atom mapper to use for mapping ligands.")
     parser.add_argument('--network_type', type=str, default='mst', choices=['mst', 'lomap', 'radial'], help="Type of ligand network to create.")
     parser.add_argument('--ligand_name', type=str, default="lig_ejm_47", help="Name of the ligand to use for the simulation.")
-    #solvent components
+    # solvent components
     parser.add_argument('--positive_ion', type=str, default='Na', help="Positive ion to use in the solvent component.")
     parser.add_argument('--negative_ion', type=str, default='Cl', help="Negative ion to use in the solvent component.")
     parser.add_argument('--no_neutralize', action='store_true', help="Whether to neutralize the system with ions.")
     parser.add_argument('--ion_concentration', type=float, default=0.15, help="Ion concentration for neutralization (mol/L).")
-    #simulation settings
+    # simulation settings
     parser.add_argument('--early_termination_target_error', type=float, default=0.0, help="Early termination target error in kcal/mol.")
     parser.add_argument('--equilibration_length', type=float, default=10.0, help="Equilibration length in picoseconds.")
     parser.add_argument('--minimization_steps', type=int, default=5000, help="Number of minimization steps.")
